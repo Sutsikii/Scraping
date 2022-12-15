@@ -69,7 +69,7 @@ async function saveJson(infos)
 let page = 0;
 let infos = [];
 
-for (let pages = 0; pages < 3; pages++)
+for (let pages = 0; pages < 8; pages++)
 {
     page ++;
     const target = `http://vps-a47222b1.vps.ovh.net:8484/Product/page/${page}`
