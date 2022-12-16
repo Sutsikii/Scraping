@@ -15,19 +15,23 @@ function getInformation(html)
 {
     var regex_prix = /<h5 class=\"card-title\">(.*)<\/h5>/gm;
     var regex_image = /<img src=\"(.*)\" class=\"card-img-top\" alt=\".*\">/gm;
+    var regex_link = /<a href="\/product\/(.*) class=\"btn btn-primary\">Go to page !<\/a>/gm;
 
     let prix;
     let img;
+    let link;
 
     var Allprix = [];
     var Allimg = [];
+    var Alllink = [];
     var info = [];
 
-    while ((prix = regex_prix.exec(html)) !== null && (img = regex_image.exec(html)) !== null) {
+    while ((prix = regex_prix.exec(html)) !== null && (img = regex_image.exec(html)) !== null && (link = regex_link.exec(html)) !== null) {
         // This is necessary to avoid infinite loops with zero-width matches
-        if (prix.index === regex_prix.lastIndex && img.index === regex_image.lastIndex) {
+        if (prix.index === regex_prix.lastIndex && img.index === regex_image.lastIndex && link.index === regex_link.lastIndex) {
             regex_prix.lastIndex++;
             regex_image.lastIndex++;
+            regex_link.lastIndex++;
         }
         // The result can be accessed through the `m`-variable.
         prix.forEach((match, groupIndex) => {
@@ -40,10 +44,15 @@ function getInformation(html)
                 Allimg.push(`${match}`);
             }
         });
+        link.forEach((match, groupIndex) => {
+            if (groupIndex === 1) {
+                Alllink.push(`${match}`);
+            }
+        });
     }
 
     for (let i = 0; i < Allprix.length; i++) {
-        info.push([ Allprix[i], Allimg[i]])
+        info.push([ Allprix[i], Allimg[i], Alllink[i]])
     }
 
     return (info);

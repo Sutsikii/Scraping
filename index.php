@@ -2,11 +2,12 @@
     $json_data = file_get_contents("./products.json");
     $info = json_decode($json_data);
 
-    // // Pagination
-    // @$page=$_GET["page"];
-    // $nbr_articles_par_pages = 8;
-    // $nbr_pages = ceil($info[0]["values"]/$nbr_articles);
-    // $debut=($page-1)*$nbr_articles;
+    //Pagination
+    // $numeropage = intval($_GET["page"]);
+    // $nbrProduits = count($info);
+    // $nbrProduitsParPage = 8;
+    // $FirstProduct = $numeropage * $nbrProduitsParPage;
+    // $nbrDePage = round($nbrProduits / $nbrProduitsParPage, 100, PHP_ROUND_HALF_UP) + 1;
 
 ?>
 
@@ -31,7 +32,6 @@
         <?php 
             foreach($info as $values)
             {
-                // echo($values[0] . '<br/>');
                 echo
                 ('
                     <div class="bg-white shadow-lg rounded-lg">
@@ -41,10 +41,8 @@
                                 <h3 class="texte-2xl text-gray-700">
                                     '. $values[0] .'
                                 </h3>
-                                <p class="mt-1 ml-auto text-lg font-medium text-gray-900">
-                                    
-                                </p>
                             </div>
+                            <a href="' . $values[2] . '" class="inline-flex items-center justify-between px-5 py-1 shadow-sm font-medium rounded-md bg-blue-300"> Voir la page ! </a>
                         </div>
                     </div>
                 ');
